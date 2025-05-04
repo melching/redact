@@ -1,0 +1,241 @@
+/* Basic styles for the image censor tool */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+/* Main layout for editor and history */
+#mainContainer {
+    display: flex;
+    flex-direction: row; /* Arrange children side-by-side */
+    width: 95%; /* Use more horizontal space */
+    max-width: 1600px; /* Limit max width */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Add space between editor and history */
+    display: none; /* Initially hidden, shown by JS */
+}
+
+#editorArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center controls and canvas */
+    flex: 1; /* Allow editor area to grow */
+    min-width: 0; /* Prevent flex item overflow */
+}
+
+#controls {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%; /* Take full width of editor area */
+    box-sizing: border-box; /* Include padding in width */
+    text-align: center; /* Center buttons */
+}
+
+#controls button {
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#controls button:hover {
+    background-color: #e0e0e0;
+}
+
+#imageCanvas {
+    border: 1px solid #ccc;
+    background-color: #fff; /* Show canvas area clearly */
+    cursor: crosshair; /* Moved from body */
+    max-width: 100%; /* Prevent canvas from exceeding editorArea width */
+    max-height: 80vh; /* Adjust max height if needed */
+    object-fit: contain; /* Ensure image content fits */
+}
+
+#uploadArea {
+    border: 2px dashed #ccc;
+    padding: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+}
+
+#uploadArea.dragover {
+    border-color: #333;
+    background-color: #e9e9e9;
+}
+
+/* Tool option inputs */
+#controls label {
+    margin-left: 5px;
+    margin-right: 15px;
+}
+#controls input[type="number"],
+#controls input[type="color"] {
+    width: 60px;
+    padding: 4px 6px;
+    margin-left: 3px;
+    vertical-align: middle; /* Align inputs nicely with labels/buttons */
+}
+
+#controls br {
+    display: block; /* Make the line break effective */
+    margin-bottom: 5px; /* Add some space after the line break */
+    content: " "; /* Required for display: block on br */
+}
+
+/* Right Sidebar Layout */
+#rightSidebar {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    flex-shrink: 0;
+    gap: 20px; /* Space between options and history */
+}
+
+/* Tool Options Section */
+#toolOptions {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#toolOptions h3,
+#historySection h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.option-group {
+    margin-bottom: 10px;
+}
+
+.option-group label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.option-group input[type="number"],
+.option-group input[type="color"] {
+    width: 80px; /* Slightly wider */
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Styling for sections within the sidebar */
+#toolSelection,
+#fileActions,
+#toolOptions,
+#historySection {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#toolSelection h3,
+#toolOptions h3,
+#historySection h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.option-group label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* Make tool buttons full width in their container */
+#toolSelection button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+#toolSelection button:hover {
+    background-color: #e9e9e9;
+}
+
+/* Style for selected tool button */
+#toolSelection button.selected {
+    background-color: #ddd;
+    border-color: #bbb;
+    font-weight: bold;
+}
+
+/* Style file action buttons */
+#fileActions button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+#fileActions button:disabled {
+    background-color: #eee;
+    color: #999;
+    cursor: not-allowed;
+}
+#fileActions button:not(:disabled):hover {
+    background-color: #e9e9e9;
+}
+
+/* History Section */
+#historySection {
+    overflow-y: auto; /* Add scroll if history gets long */
+    margin-top: 0; /* Align with top of editor area */
+    flex-grow: 1; /* Allow history to take remaining space */
+    min-height: 100px; /* Ensure it's visible */
+    display: none; /* Initially hidden, shown by JS */
+}
+
+#historyList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#historyList li {
+    padding: 5px 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#historyList li:hover {
+    background-color: #f0f0f0;
+}
+
+#historyList li.active {
+    background-color: #d0e0ff; /* Highlight the active state */
+    font-weight: bold;
+} 
