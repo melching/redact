@@ -277,9 +277,18 @@ canvas.addEventListener('mouseleave', cancelDrawing); // Cancel if mouse leaves 
 
 function getMousePos(canvas, evt) {
     const rect = canvas.getBoundingClientRect();
+    // Get the mouse position relative to the canvas element's displayed position
+    const clientX = evt.clientX - rect.left;
+    const clientY = evt.clientY - rect.top;
+    
+    // Scale the mouse coordinates from the displayed size to the internal canvas size
+    // This is necessary because CSS might scale the canvas display size
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
     return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
+        x: clientX * scaleX,
+        y: clientY * scaleY
     };
 }
 
